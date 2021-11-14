@@ -1,4 +1,10 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 import express from 'express';
+import './src/database';
+
 import HomeRoutes from './src/routes/HomeRoutes';
 
 class App {
@@ -12,6 +18,7 @@ class App {
     this.app.use(express.urlencoded({
       extended: true,
     }));
+
     this.app.use(express.json());
   }
 

@@ -9,9 +9,9 @@ class UserController {
 
     try {
       const novoUser = await User.create(body);
-
+      const { id, nome, email } = novoUser;
       return res.json(
-        novoUser,
+        { id, nome, email },
       );
     } catch (e) {
       console.log('error: ', e);
@@ -24,7 +24,9 @@ class UserController {
   /** Index */
   async index(req, res) {
     try {
-      const users = await User.findAll();
+      const users = await User.findAll({
+        attributes: ['id', 'nome', 'email'],
+      });
       return res.json(users);
     } catch (e) {
       console.log(e);
@@ -35,15 +37,9 @@ class UserController {
   /** Show */
   async show(req, res) {
     try {
-      const id = Number(req.params.id);
-
-      if (typeof id !== 'number' || Number.isNaN(id)) {
-        return res.status(400).json({
-          errors: ['ID não enviado.'],
-        });
-      }
-
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.userId, {
+        attributes: ['id', 'nome', 'email'],
+      });
       return res.json(user);
     } catch (e) {
       console.log(e);
@@ -56,21 +52,16 @@ class UserController {
   /** Update */
   async update(req, res) {
     try {
-      if (!req.params.id) {
-        return res.status(400).json({
-          errors: ['ID não enviado.'],
-        });
-      }
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.userId);
       if (!user) {
         return res.status(404).json({
           errors: ['Usuário não existe.'],
         });
       }
 
-      const novoDados = await user.update(req.body);
-
-      return res.json(novoDados);
+      const novosDados = await user.update(req.body);
+      const { id, nome, email } = novosDados;
+      return res.json({ id, nome, email });
     } catch (e) {
       console.log('error: ', e);
       return res.status(400).json({
@@ -81,16 +72,8 @@ class UserController {
 
   /** Delete */
   async delete(req, res) {
-    const id = Number(req.params.id);
-    console.log(typeof id);
-    console.log(id);
-    if (typeof id !== 'number' || Number.isNaN(id)) {
-      return res.status(400).json({
-        errors: ['ID não enviado.'],
-      });
-    }
     try {
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(req.userId);
 
       if (!user) {
         return res.status(404).json({
@@ -98,7 +81,7 @@ class UserController {
         });
       }
       await user.destroy();
-      return res.json(user);
+      return res.json(null);
     } catch (e) {
       console.log(e);
       return res.status(400).json({

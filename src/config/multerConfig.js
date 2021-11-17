@@ -7,6 +7,15 @@ import {
 const aleatorio = () => Math.floor(Math.random() * 10000 + 1000);
 
 export default {
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype !== 'image/png' && file.mimetype !== 'image/jpeg') {
+      console.log(file.mimetype);
+      return cb(new multer.MulterError('Arquivo precisa ser PNG ou JPG.'));
+    }
+
+    return cb(null, true);
+  },
+
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
       // 1 erro/ 2 - caminho

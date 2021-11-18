@@ -19,7 +19,7 @@ export default {
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
       // 1 erro/ 2 - caminho
-      cb(null, resolve(__dirname, '..', '..', 'uploads'));
+      cb(null, resolve(__dirname, '..', '..', 'uploads', 'images'));
     },
     filename: (req, file, cb) => {
       // 1 erro/ 2 - caminho

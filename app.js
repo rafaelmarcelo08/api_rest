@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
+import { resolve } from 'path';
 
 import './src/database';
 import tokenRoutes from './src/routes/tokenRoutes';
@@ -23,6 +24,7 @@ class App {
     }));
 
     this.app.use(express.json());
+    this.app.use(express.static(resolve(__dirname, 'uploads')));
   }
 
   routes() {

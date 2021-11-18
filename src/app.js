@@ -5,11 +5,11 @@ dotenv.config();
 import express from 'express';
 import { resolve } from 'path';
 
-import './src/database';
-import tokenRoutes from './src/routes/tokenRoutes';
-import userRoutes from './src/routes/userRoutes';
-import alunoRoutes from './src/routes/alunoRoutes';
-import fotosRoutes from './src/routes/fotoRoutes';
+import './database';
+import tokenRoutes from './routes/tokenRoutes';
+import userRoutes from './routes/userRoutes';
+import alunoRoutes from './routes/alunoRoutes';
+import fotosRoutes from './routes/fotoRoutes';
 
 class App {
   constructor() {

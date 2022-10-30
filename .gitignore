@@ -1,5 +1,2 @@
 /node_modules
-.eslintrc.js
-.editorconfig
-nodemon.json
 .env

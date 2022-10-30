@@ -6,6 +6,8 @@ import express from 'express';
 import { resolve } from 'path';
 
 import './src/database';
+import cors from 'cors';
+
 import tokenRoutes from './src/routes/tokenRoutes';
 import userRoutes from './src/routes/userRoutes';
 import alunoRoutes from './src/routes/alunoRoutes';
@@ -24,6 +26,7 @@ class App {
     }));
 
     this.app.use(express.json());
+    this.app.use(cors());
     this.app.use(express.static(resolve(__dirname, 'uploads')));
   }
 
